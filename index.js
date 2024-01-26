@@ -37,11 +37,7 @@ async function run() {
         res.send(result);
     })
 
-    app.post('/tasks', async(req, res) => {
-      const item = req.body;
-      const result = await taskCollection.insertOne(item);
-      res.send(result);
-    })
+
 
     app.get('/tasks' , async(req, res) => {
       let query = {};
@@ -71,7 +67,17 @@ async function run() {
     })
 
 
- 
+    app.patch('/tasks/completed/:id', async(req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id)};
+      const updatedDoc = {
+        $set : {
+          status: 'Completed'
+        }
+      }
+      const result = await taskCollection.updateOne(query, updatedDoc);
+      res.send(result)
+    });
 
 
     app.patch('/tasks/ongoing/:id', async(req, res) => {
