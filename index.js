@@ -53,22 +53,7 @@ async function run() {
     })
 
 
-    app.put('/tasks/:id', async(req, res) => {
-      const id = req.params.id;
-      const query = {_id : new ObjectId(id)};
-      const updatedData = req.body;
-      const updatedDoc = {
-        $set : {
-          userName: updatedData.userName,
-          title: updatedData.title,
-          deadline: updatedData.deadline,
-          priority: updatedData.priority,
-          taskDescription: updatedData.taskDescription,
-        }
-      }
-      const result = await taskCollection.updateOne(query, updatedDoc);
-      res.send(result);
-    })
+
 
 
     app.patch('/tasks/completed/:id', async(req, res) => {
